@@ -20,7 +20,7 @@ jobs:
 
       - name: Download source code
         run: |
-          wget https://github.com/rdkit/rdkit/archive/refs/tags/Release_${{env.version}}.tar.gz
+          curl -O https://github.com/rdkit/rdkit/archive/refs/tags/Release_${{env.version}}.tar.gz
           tar -xvf ${{env.version}}.tar.gz
           dir
           
