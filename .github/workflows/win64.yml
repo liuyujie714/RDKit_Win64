@@ -33,6 +33,7 @@ jobs:
             platform_version: 2019
             # install to C:\boost
             boost_install_dir: C:\
+            toolset: msvc
       
       - name: Configure build for amd64
         uses: ilammy/msvc-dev-cmd@v1
@@ -47,9 +48,9 @@ jobs:
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DBoost_LIBRARY_DIR="${{steps.boost.outputs.BOOST_ROOT}}\lib" `
-                   -DBoost_INCLUDE_DIR="${{steps.boost.outputs.BOOST_ROOT}}\include" ` 
-                   -DRDK_BUILD_PYTHON_WRAPPERS=OFF ` 
-                   -DBOOST_ROOT=C:/boost ` 
+                   -DBoost_INCLUDE_DIR="${{steps.boost.outputs.BOOST_ROOT}}\include" `
+                   -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
+                   -DBOOST_ROOT=C:/boost `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF
           dir
           msbuild /m:4 /p:Configuration=Release INSTALL.vcxproj
