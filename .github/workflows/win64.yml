@@ -1,4 +1,4 @@
-name: Build Windows RDKit
+name: Build Windows RDKit 
 
 on:
   push:
