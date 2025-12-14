@@ -20,7 +20,8 @@ jobs:
 
       - name: Download source code
         run: |
-          curl -O https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
+          vcpkg install wget
+          wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xvf ${{env.version}}.tar.gz
           dir
           
