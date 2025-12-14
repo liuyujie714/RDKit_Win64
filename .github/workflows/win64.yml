@@ -26,11 +26,11 @@ jobs:
           dir
           
       - name: Install boost
-        uses: MarkusJx/install-boost@v2.4.4
+        uses: MarkusJx/install-boost@6d8df42f57de83c5b326b5b83e7b35d650030103
         id: boost
         with:
             boost_version: 1.84.0
-            platform_version: 2022
+            platform_version: 2019
             # install to C:\boost
             boost_install_dir: C:\
             toolset: msvc
