@@ -43,7 +43,7 @@ jobs:
       - name: Bulid RDKut
         run: |
           cd rdkit-Release_${{env.version}}
-          md bulid && cd build
+          md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=ON -DBOOST_ROOT=C:/boost -DRDK_BUILD_INCHI_SUPPORT=ON -DRDK_BUILD_AVALON_SUPPORT=ON -DRDK_BUILD_PGSQL=OFF
           dir
         
