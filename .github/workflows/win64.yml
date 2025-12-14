@@ -20,7 +20,7 @@ jobs:
 
       - name: Download source code
         run: |
-          vcpkg install wget
+          choco install wget -y
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xvf ${{env.version}}.tar.gz
           dir
