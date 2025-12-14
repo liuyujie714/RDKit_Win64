@@ -1,0 +1,58 @@
+name: Build Windows RDKit
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  version: 2025_09_3
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  Windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download source code
+        run: |
+          wget https://github.com/rdkit/rdkit/archive/refs/tags/Release_${{env.version}}.tar.gz
+          tar -xvf ${{env.version}}.tar.gz
+          dir
+          
+      - name: Install boost
+        uses: MarkusJx/install-boost@v2.4.4
+        id: boost
+        with:
+            boost_version: 1.77.0
+            platform_version: 2019
+            # install to C:\boost
+            boost_install_dir: C:\
+      
+      - name: Configure build for amd64
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: amd64
+          toolset: 14.29
+      
+      - name: Bulid VMD
+        run: |
+          dir
+        
+      - name: EXE
+        run: |
+          md tempfiles
+        
+      - name: Upload RDKit
+        uses: actions/upload-artifact@v4
+        if: ${{ success() }}
+        with:
+          name: RDKit_Win64
+          path: |
+            tempfiles/
+            
+    
