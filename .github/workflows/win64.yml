@@ -33,7 +33,7 @@ jobs:
             platform_version: 2019
             # install to C:\boost
             boost_install_dir: C:\
-            toolset: msvc14.2
+            toolset: msvc
       
       - name: Configure build for amd64
         uses: ilammy/msvc-dev-cmd@v1
