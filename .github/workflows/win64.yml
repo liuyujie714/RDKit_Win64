@@ -21,7 +21,6 @@ jobs:
       - name: Download source code
         run: |
           choco install wget ninja zlib -y
-          pip install cmake==3.18
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xvf Release_${{env.version}}.tar.gz
           dir
@@ -46,15 +45,15 @@ jobs:
 
       - name: Bulid RDKit
         env:
-          BOOST_ROOT: ${{ steps.boost.outputs.root }}
+          Boost_ROOT: ${{ steps.boost.outputs.root }}
         run: |
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
-                   -DBOOST_ROOT=${{ env.BOOST_ROOT }} `
+                   -DBoost_ROOT=${{ env.BOOST_ROOT }} `
                    -DRDK_USE_BOOST_IOSTREAMS=OFF `
-                   -DCMAKE_PREFIX_PATH=${{ env.BOOST_ROOT }}\tools\boost_install  `
                    -DBOOST_LIBRARYDIR=${{ steps.boost.outputs.librarydir }} `
+                   -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
                    -G Ninja `
