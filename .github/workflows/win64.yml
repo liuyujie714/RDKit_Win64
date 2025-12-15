@@ -47,7 +47,7 @@ jobs:
         env:
           BOOST_ROOT: ${{ steps.boost.outputs.root }}
         run: |
-          dir D:\a\RDKit_Win64\boost
+          dir D:\a\RDKit_Win64\boost\tools\boost_install
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
