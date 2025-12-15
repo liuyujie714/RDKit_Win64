@@ -34,6 +34,7 @@ jobs:
             # install to C:\boost
             boost_install_dir: C:\
             toolset: msvc
+            cache: false
       
       - name: Configure build for amd64
         uses: ilammy/msvc-dev-cmd@v1
