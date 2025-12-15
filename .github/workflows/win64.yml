@@ -37,7 +37,8 @@ jobs:
                         boost-program-options:x64-windows-static `
                         boost-system:x64-windows-static `
                         boost-serialization:x64-windows-static `
-                        boost-iostreams:x64-windows-static
+                        boost-iostreams:x64-windows-static `
+                        boost-format:x64-windows-static
 
       - name: Bulid RDKit
         run: |
