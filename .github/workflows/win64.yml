@@ -57,7 +57,8 @@ jobs:
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DRDK_USE_BOOST_IOSTREAMS=OFF `
                    -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
-                   -G Ninja
+                   -G Ninja `
+                   -DCMAKE_BUILD_TYPE=Release
                    
           sed -i 's/-MD/-MT/g' build.ninja
           ninja install -j4 || ninja install -j1
