@@ -52,7 +52,7 @@ jobs:
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DBoost_ROOT=${{ env.Boost_ROOT }} `
                    -DBoost_DIR=${{ env.Boost_ROOT }}\tools\boost_install `
-                   -DBoost_INCLUDEDIR=${env.Boost_ROOT}\boost `
+                   -DBoost_INCLUDEDIR=${{ env.Boost_ROOT }}\boost `
                    -DBoost_LIBRARYDIR=${{ steps.boost.outputs.librarydir }} `
                    -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
                    -DRDK_USE_BOOST_IOSTREAMS=OFF `
