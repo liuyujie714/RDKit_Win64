@@ -1,3 +1,4 @@
+
 name: Build Windows RDKit 
 
 on:
@@ -42,3 +43,33 @@ jobs:
         run: |
           $env:VCPKG_BUILD_TYPE = "release"
           vcpkg install boost:x64-windows-static --binarysource="clear;x-gha,readwrite"
+
+      - name: Bulid RDKit
+        run: |
+          cd rdkit-Release_${{env.version}}
+          sed -i 's/set(RDK_BOOST_VERSION "1\.81\.0")/set(RDK_BOOST_VERSION "1.89.0")/g' CMakeLists.txt
+          md build && cd build
+          cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
+                   -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
+                   -DVCPKG_TARGET_TRIPLET=x64-windows-static `
+                   -DRDK_USE_BOOST_IOSTREAMS=OFF `
+                   -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
+                   -DBoost_USE_STATIC_LIBS=ON `
+                   -DBoost_USE_STATIC_RUNTIME=ON `
+                   -G Ninja `
+                   -DCMAKE_BUILD_TYPE=Release 
+                   
+          sed -i 's/-MD/-MT/g' build.ninja
+          ninja install -j4 || ninja install -j1
+          dir lib\
+          Copy-Item -Path ".\lib\"         -Destination "C:\RDKit_Win64\lib" -Recurse
+          Copy-Item -Path "..\Code\"       -Destination "C:\RDKit_Win64\Code" -Recurse
+        
+      - name: Upload RDKit
+        uses: actions/upload-artifact@v4
+        if: ${{ success() }}
+        with:
+          name: RDKit_Win64
+          path: |
+            C:\RDKit_Win64
+            
