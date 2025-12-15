@@ -21,7 +21,6 @@ jobs:
       - name: Download source code
         run: |
           choco install wget ninja -y
-          vcpkg install zlib:x64-windows
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xvf Release_${{env.version}}.tar.gz
           dir
@@ -37,7 +36,7 @@ jobs:
         uses: mickem/build-boost@v1
         with:
           version: 1.81.0
-          libraries: filesystem program_options system serialization iostreams
+          libraries: filesystem program_options system serialization iostreams zlib
           platform: x64
           toolset: msvc142
           configuration: Release
@@ -56,8 +55,6 @@ jobs:
                    -DBOOST_LIBRARYDIR=${{ steps.boost.outputs.librarydir }} `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
-                   -DRDK_USE_BOOST_IOSTREAMS=OFF `
-                   -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
                    -G Ninja `
                    -DCMAKE_BUILD_TYPE=Release `
                    -DBoost_USE_STATIC_RUNTIME=ON
