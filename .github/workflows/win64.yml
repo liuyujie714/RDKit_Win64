@@ -51,6 +51,8 @@ jobs:
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DBoost_ROOT=${{ env.BOOST_ROOT }} `
+                   -DBoost_DIR=${{ env.BOOST_ROOT }}\tools\boost_install `
+                   -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
                    -DRDK_USE_BOOST_IOSTREAMS=OFF `
                    -DBOOST_LIBRARYDIR=${{ steps.boost.outputs.librarydir }} `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
