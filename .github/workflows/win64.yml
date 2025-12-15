@@ -20,7 +20,7 @@ jobs:
 
       - name: Download source code
         run: |
-          choco install wget -y
+          choco install wget ninja -y
           vcpkg install zlib:x64-windows
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xvf Release_${{env.version}}.tar.gz
@@ -56,9 +56,11 @@ jobs:
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DRDK_USE_BOOST_IOSTREAMS=OFF `
-                   -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+                   -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
+                   -G Ninja
                    
-          msbuild /m:4 /p:Configuration=Release INSTALL.vcxproj
+          sed -i 's/-MD/-MT/g' build.ninja
+          ninja install -j4 || ninja install -j1
           dir lib\Release\
           Copy-Item -Path ".\lib\Release\" -Destination "C:\RDKit_Win64\lib" -Recurse
           Copy-Item -Path "..\Code\"       -Destination "C:\RDKit_Win64\Code" -Recurse
