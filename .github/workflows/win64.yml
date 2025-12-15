@@ -21,6 +21,7 @@ jobs:
       - name: Download source code
         run: |
           choco install wget -y
+          vcpkg install zlib:x64-windows
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xvf Release_${{env.version}}.tar.gz
           dir
@@ -53,7 +54,10 @@ jobs:
                    -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DBOOST_ROOT=C:/boost `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
-                   -DBoost_USE_STATIC_LIBS=ON
+                   -DBoost_USE_STATIC_LIBS=ON `
+                   -DRDK_USE_BOOST_IOSTREAMS=OFF `
+                   -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+                   
           dir
           msbuild /m:4 /p:Configuration=Release INSTALL.vcxproj
         
