@@ -33,11 +33,11 @@ jobs:
           
       - name: Build Boost
         run: |
-          vcpkg install boost-filesystem:x64-windows-static `
-                        boost-program-options:x64-windows-static `
-                        boost-system:x64-windows-static `
-                        boost-serialization:x64-windows-static `
-                        boost-iostreams:x64-windows-static
+          vcpkg install boost-filesystem@1.81.0:x64-windows-static `
+                        boost-program-options@1.81.0:x64-windows-static `
+                        boost-system@1.81.0:x64-windows-static `
+                        boost-serialization@1.81.0:x64-windows-static `
+                        boost-iostreams@1.81.0:x64-windows-static
 
       - name: Bulid RDKit
         run: |
