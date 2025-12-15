@@ -39,16 +39,17 @@ jobs:
           version: 1.81.0
           libraries: filesystem program_options system serialization iostreams
           platform: x64
+          toolset: msvc142
           configuration: Release
           static: 1
           static-runtime: 1
+          directory: C:\
 
       - name: Bulid RDKit
         env:
           BOOST_ROOT: ${{ steps.boost.outputs.BOOST_ROOT }}
         run: |
           dir C:\boost\boost\lib
-          exit
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DBoost_LIBRARY_DIR="${{steps.boost.outputs.BOOST_ROOT}}\lib" `
