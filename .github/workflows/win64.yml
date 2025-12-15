@@ -24,7 +24,7 @@ jobs:
 
       - name: Download source code
         run: |
-          choco install curl ninja zlib -y
+          choco install curl wget ninja zlib -y
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xf Release_${{env.version}}.tar.gz
           dir
