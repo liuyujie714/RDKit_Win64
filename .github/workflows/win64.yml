@@ -20,7 +20,7 @@ jobs:
 
       - name: Download source code
         run: |
-          choco install wget ninja -y
+          choco install wget ninja zlib -y
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xvf Release_${{env.version}}.tar.gz
           dir
@@ -36,7 +36,7 @@ jobs:
         uses: mickem/build-boost@v1
         with:
           version: 1.81.0
-          libraries: filesystem program_options system serialization iostreams zlib
+          libraries: filesystem program_options system serialization iostreams
           platform: x64
           toolset: msvc142
           configuration: Release
@@ -52,6 +52,8 @@ jobs:
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DBOOST_ROOT=${{ env.BOOST_ROOT }} `
+                   -DRDK_USE_BOOST_IOSTREAMS=OFF `
+                   -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
                    -DBOOST_LIBRARYDIR=${{ steps.boost.outputs.librarydir }} `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
@@ -62,7 +64,7 @@ jobs:
           sed -i 's/-MD/-MT/g' build.ninja
           ninja install -j4 || ninja install -j1
           dir lib\
-          Copy-Item -Path ".\lib\" -Destination "C:\RDKit_Win64\lib" -Recurse
+          Copy-Item -Path ".\lib\"         -Destination "C:\RDKit_Win64\lib" -Recurse
           Copy-Item -Path "..\Code\"       -Destination "C:\RDKit_Win64\Code" -Recurse
         
       - name: Upload RDKit
