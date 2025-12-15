@@ -58,12 +58,10 @@ jobs:
                    -DRDK_USE_BOOST_IOSTREAMS=OFF `
                    -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
                    
-          dir
           msbuild /m:4 /p:Configuration=Release INSTALL.vcxproj
-        
-      - name: EXE
-        run: |
-          md tempfiles
+          dir lib\Release\
+          Copy-Item -Path ".\lib\Release\" -Destination "C:\RDKit_Win64\lib" -Recurse
+          Copy-Item -Path "..\Code\"       -Destination "C:\RDKit_Win64\Code" -Recurse
         
       - name: Upload RDKit
         uses: actions/upload-artifact@v4
@@ -71,7 +69,5 @@ jobs:
         with:
           name: RDKit_Win64
           path: |
-            tempfiles/
-            
-    
+            C:\RDKit_Win64
 
