@@ -52,7 +52,8 @@ jobs:
                    -DBoost_INCLUDE_DIR="${{steps.boost.outputs.BOOST_ROOT}}\include" `
                    -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DBOOST_ROOT=C:/boost `
-                   -DRDK_BUILD_FREETYPE_SUPPORT=OFF
+                   -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
+                   -DBoost_USE_STATIC_LIBS=ON
           dir
           msbuild /m:4 /p:Configuration=Release INSTALL.vcxproj
         
