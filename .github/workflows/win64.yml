@@ -39,7 +39,7 @@ jobs:
         shell: powershell
         run: |
           $env:BOOST_PATH = "C:\hostedtoolcache\windows\Boost\$env:BOOST_VERSION\x86_64"
-          curl -o boost.exe -L https://sourceforge.net/projects/boost/files/boost-binaries/${{env.BOOST_VERSION}}/${{env.BOOST_EXE}}.exe
+          curl -L https://sourceforge.net/projects/boost/files/boost-binaries/${{env.BOOST_VERSION}}/${{env.BOOST_EXE}}.exe
           dir
           #Start-Process -Wait -FilePath "$env:TEMP\boost.exe" "/SILENT","/SP-","/SUPPRESSMSGBOXES","/DIR=$env:BOOST_PATH"
 
