@@ -48,13 +48,13 @@ jobs:
         env:
           BOOST_ROOT: ${{ steps.boost.outputs.BOOST_ROOT }}
         run: |
-          dir ${{ github.workspace }}\boost\boost\lib
+          dir ${{ github.workspace }}\boost\lib
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DBoost_LIBRARY_DIR="${{steps.boost.outputs.BOOST_ROOT}}\lib" `
                    -DBoost_INCLUDE_DIR="${{steps.boost.outputs.BOOST_ROOT}}\include" `
                    -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
-                   -DBOOST_ROOT=${{ github.workspace }}/boost `
+                   -DBOOST_ROOT=${{ github.workspace }} `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DRDK_USE_BOOST_IOSTREAMS=OFF `
