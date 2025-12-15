@@ -45,7 +45,8 @@ jobs:
           # Set the BOOST_ROOT variable
           echo "BOOST_ROOT=$env:BOOST_PATH" >> $env:GITHUB_ENV
           dir $env:BOOST_PATH
-          dir $env:BOOST_PATH\stage\lib
+          dir $env:BOOST_PATH\libs
+          dir $env:BOOST_PATH\lib64-msvc-14.2
       
       - name: Bulid RDKit
         run: |
