@@ -38,12 +38,12 @@ jobs:
       - name: Install Boost
         shell: powershell
         run: |
-          $BOOST_PATH = "C:\hostedtoolcache\windows\Boost\$env:BOOST_VERSION\x86_64"
-          wget -O "$env:TEMP\boost.exe" https://sourceforge.net/projects/boost/files/boost-binaries/$env:BOOST_VERSION/$env:BOOST_EXE.exe
-          Start-Process -Wait -FilePath "$env:TEMP\boost.exe" "/SILENT","/SP-","/SUPPRESSMSGBOXES","/DIR=$BOOST_PATH"
+          $env:BOOST_PATH = "C:\hostedtoolcache\windows\Boost\$env:BOOST_VERSION\x86_64"
+          wget -O "$env:TEMP\boost.exe" https://sourceforge.net/projects/boost/files/boost-binaries/${{env.BOOST_VERSION}}/${{env.BOOST_EXE}}.exe
+          Start-Process -Wait -FilePath "$env:TEMP\boost.exe" "/SILENT","/SP-","/SUPPRESSMSGBOXES","/DIR=$env:BOOST_PATH"
 
           # Set the BOOST_ROOT variable
-          echo "BOOST_ROOT=$BOOST_PATH" >> $env:GITHUB_ENV
+          echo "BOOST_ROOT=$env:BOOST_PATH" >> $env:GITHUB_ENV
           dir $BOOST_PATH
           dir $BOOST_PATH\stage\lib
       
