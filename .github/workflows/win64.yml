@@ -46,6 +46,7 @@ jobs:
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
+                   -DVCPKG_TARGET_TRIPLET=x64-windows-static `
                    -DRDK_USE_BOOST_IOSTREAMS=OFF `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
