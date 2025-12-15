@@ -24,7 +24,7 @@ jobs:
 
       - name: Download source code
         run: |
-          choco install wget ninja zlib -y
+          choco install curl wget ninja zlib -y
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xf Release_${{env.version}}.tar.gz
           dir
@@ -39,7 +39,7 @@ jobs:
         shell: powershell
         run: |
           $env:BOOST_PATH = "C:\hostedtoolcache\windows\Boost\$env:BOOST_VERSION\x86_64"
-          curl -o boost.exe  -L https://sourceforge.net/projects/boost/files/boost-binaries/${{env.BOOST_VERSION}}/${{env.BOOST_EXE}}.exe
+          curl.exe -o boost.exe  -L https://sourceforge.net/projects/boost/files/boost-binaries/${{env.BOOST_VERSION}}/${{env.BOOST_EXE}}.exe
           dir
           #Start-Process -Wait -FilePath "$env:TEMP\boost.exe" "/SILENT","/SP-","/SUPPRESSMSGBOXES","/DIR=$env:BOOST_PATH"
 
