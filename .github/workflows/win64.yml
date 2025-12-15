@@ -38,7 +38,7 @@ jobs:
       - name: Install Boost
         shell: powershell
         run: |
-          $env:BOOST_PATH = "C:\hostedtoolcache\windows\Boost\$env:BOOST_VERSION\x86_64"
+          $env:BOOST_PATH = "C:\boost"
           curl.exe -o "$env:TEMP\boost.exe" -L https://sourceforge.net/projects/boost/files/boost-binaries/${{env.BOOST_VERSION}}/${{env.BOOST_EXE}}.exe
           Start-Process -Wait -FilePath "$env:TEMP\boost.exe" "/SILENT","/SP-","/SUPPRESSMSGBOXES","/DIR=$env:BOOST_PATH"
 
@@ -59,6 +59,7 @@ jobs:
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DBoost_USE_STATIC_RUNTIME=ON `
+                   -DBoost_ROOT=$env:BOOST_ROOT `
                    -G Ninja `
                    -DCMAKE_BUILD_TYPE=Release 
                    
