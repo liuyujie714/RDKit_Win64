@@ -47,6 +47,8 @@ jobs:
         env:
           BOOST_ROOT: ${{ steps.boost.outputs.BOOST_ROOT }}
         run: |
+          dir C:\boost\boost\lib
+          exit
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DBoost_LIBRARY_DIR="${{steps.boost.outputs.BOOST_ROOT}}\lib" `
