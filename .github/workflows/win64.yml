@@ -62,8 +62,8 @@ jobs:
                    
           sed -i 's/-MD/-MT/g' build.ninja
           ninja install -j4 || ninja install -j1
-          dir lib\Release\
-          Copy-Item -Path ".\lib\Release\" -Destination "C:\RDKit_Win64\lib" -Recurse
+          dir lib\
+          Copy-Item -Path ".\lib\" -Destination "C:\RDKit_Win64\lib" -Recurse
           Copy-Item -Path "..\Code\"       -Destination "C:\RDKit_Win64\Code" -Recurse
         
       - name: Upload RDKit
