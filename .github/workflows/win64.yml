@@ -21,6 +21,7 @@ jobs:
       - name: Download source code
         run: |
           choco install wget ninja zlib -y
+          pip install cmake==3.18
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xvf Release_${{env.version}}.tar.gz
           dir
