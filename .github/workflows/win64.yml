@@ -8,6 +8,9 @@ on:
 
 env:
   version: 2025_09_3
+  BOOST_VERSION: 1.81.0
+  BOOST_EXE: boost_1_81_0-msvc-14.2
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -23,7 +26,7 @@ jobs:
         run: |
           choco install wget ninja zlib -y
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
-          tar -xvf Release_${{env.version}}.tar.gz
+          tar -xf Release_${{env.version}}.tar.gz
           dir
 
       - name: Configure build for amd64
@@ -32,22 +35,24 @@ jobs:
           arch: amd64
           toolset: 14.29
 
-      - name: "Setup cache for dependencies"
-        uses: actions/github-script@v7
-        with:
-          script: |
-            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
-            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
-          
-      - name: Build Boost
+      - name: Install Boost
+        shell: powershell
         run: |
-          $env:VCPKG_BUILD_TYPE = "release"
-          vcpkg install boost:x64-windows-static --binarysource="clear;x-gha,readwrite"
+          $BOOST_PATH = "C:\hostedtoolcache\windows\Boost\$env:BOOST_VERSION\x86_64"
+ 
+          # Use the prebuilt binary for Windows
+          $Url = "https://sourceforge.net/projects/boost/files/boost-binaries/$env:BOOST_VERSION/$env:BOOST_EXE-64.exe"
+          (New-Object System.Net.WebClient).DownloadFile($Url, "$env:TEMP\boost.exe")
+          Start-Process -Wait -FilePath "$env:TEMP\boost.exe" "/SILENT","/SP-","/SUPPRESSMSGBOXES","/DIR=$BOOST_PATH"
 
+          # Set the BOOST_ROOT variable
+          echo "BOOST_ROOT=$BOOST_PATH" >> $env:GITHUB_ENV
+          dir $BOOST_PATH
+          dir $BOOST_PATH\stage\lib
+      
       - name: Bulid RDKit
         run: |
           cd rdkit-Release_${{env.version}}
-          sed -i 's/set(RDK_BOOST_VERSION "1\.81\.0")/set(RDK_BOOST_VERSION "1.89.0")/g' CMakeLists.txt
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
