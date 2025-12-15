@@ -9,7 +9,7 @@ on:
 env:
   version: 2025_09_3
   BOOST_VERSION: 1.81.0
-  BOOST_EXE: boost_1_81_0-msvc-14.2
+  BOOST_EXE: boost_1_81_0-msvc-14.2-64
 
 
 concurrency:
@@ -39,9 +39,8 @@ jobs:
         shell: powershell
         run: |
           $BOOST_PATH = "C:\hostedtoolcache\windows\Boost\$env:BOOST_VERSION\x86_64"
- 
           # Use the prebuilt binary for Windows
-          $Url = "https://sourceforge.net/projects/boost/files/boost-binaries/$env:BOOST_VERSION/$env:BOOST_EXE-64.exe"
+          $Url = "https://sourceforge.net/projects/boost/files/boost-binaries/$env:BOOST_VERSION/$env:BOOST_EXE.exe"
           (New-Object System.Net.WebClient).DownloadFile($Url, "$env:TEMP\boost.exe")
           Start-Process -Wait -FilePath "$env:TEMP\boost.exe" "/SILENT","/SP-","/SUPPRESSMSGBOXES","/DIR=$BOOST_PATH"
 
