@@ -34,7 +34,14 @@ jobs:
       - name: Build Boost
         run: |
           $env:VCPKG_BUILD_TYPE = "release"
-          vcpkg install boost:x64-windows-static
+          vcpkg install `
+                      boost-filesystem:x64-windows-static `
+                      boost-program-options:x64-windows-static `
+                      boost-system:x64-windows-static `
+                      boost-serialization:x64-windows-static `
+                      boost-iostreams:x64-windows-static `
+                      boost-graph:x64-windows-static `
+                      boost-format:x64-windows-static
 
       - name: Bulid RDKit
         run: |
