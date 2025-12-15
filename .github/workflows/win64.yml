@@ -51,9 +51,7 @@ jobs:
           dir ${{ steps.boost.outputs.librarydir }} 
           cd rdkit-Release_${{env.version}}
           md build && cd build
-          cmake .. -DBoost_LIBRARY_DIR="${{steps.boost.outputs.BOOST_ROOT}}\lib" `
-                   -DBoost_INCLUDE_DIR="${{steps.boost.outputs.BOOST_ROOT}}\include" `
-                   -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
+          cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DBOOST_ROOT=${{ env.BOOST_ROOT }} `
                    -BOOST_LIBRARYDIR=${{ steps.boost.outputs.librarydir }} `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
