@@ -43,9 +43,9 @@ jobs:
          curl.exe -L https://sourceforge.net/projects/boost/files/boost/${{env.BOOST_VERSION}}/${{env.BOOST_NAME}}.tar.gz/download -o ${{env.BOOST_NAME}}.tar.gz
          tar -xf zlib-1.2.11.tar.gz
          tar -xf bzip2-1.0.6.tar.gz
-         tar -xf boost-1.81.0.tar.gz
+         tar -xf ${{env.BOOST_NAME}}.tar.gz
          dir
-         cd boost-${{env.BOOST_VERSION}}
+         cd ${{env.BOOST_NAME}}
          .\bootstrap.bat --without-icu
          b2 --clean-all
          b2 --user-config=user-config.jam --stagedir=win32-x86_64 address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
