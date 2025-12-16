@@ -57,6 +57,12 @@ jobs:
         env: 
           BOOST_ROOT: ${{ github.workspace }}\${{env.BOOST_NAME}}
         run: |
+          dir ${{env.BOOST_NAME}}\boost
+          dir ${{env.BOOST_NAME}}\win32-x86_64
+          dir ${{env.BOOST_NAME}}\win32-x86_64\lib
+          
+          exit
+      
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
@@ -65,8 +71,8 @@ jobs:
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
                    -DCMAKE_PREFIX_PATH=${{ github.workspace }}\${{env.BOOST_NAME}} `
-                   -DBoost_ROOT=${{ github.workspace }}\${{env.BOOST_NAME}} `
-                   -DBOOST_LIBRARY_DIR=${{ github.workspace }}\${{env.BOOST_NAME}}\win32-x86_64\lib `
+                   -DBoost_ROOT=${{env.BOOST_NAME}} `
+                   -DBOOST_LIBRARY_DIR=${{env.BOOST_NAME}}\win32-x86_64\lib `
                    -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\include" `
                    -G Ninja 
                    
