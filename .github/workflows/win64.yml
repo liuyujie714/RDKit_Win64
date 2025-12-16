@@ -1,4 +1,5 @@
-name: Build Windows RDKit 
+
+	name: Build Windows RDKit 
 
 on:
   push:
@@ -9,8 +10,8 @@ env:
   version: 2025_09_3
   BOOST_VERSION: 1.81.0
   BOOST_NAME: boost_1_81_0
-
-
+  BOOST_ROOT: C:\boost
+  
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -26,7 +27,36 @@ jobs:
           choco install curl wget ninja -y
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xf Release_${{env.version}}.tar.gz
+      - name: Configure build for amd64
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: amd64
+          toolset: 14.29  
 
+      - name: Install Boost
+        shell: powershell
+        run: |
+         cmake --version
+         curl.exe -L https://zlib.net/fossils/zlib-1.2.11.tar.gz -o zlib-1.2.11.tar.gz
+         curl.exe -L https://sourceware.org/pub/bzip2/bzip2-1.0.6.tar.gz -o bzip2-1.0.6.tar.gz
+         curl.exe -L https://sourceforge.net/projects/boost/files/boost/${{env.BOOST_VERSION}}/${{env.BOOST_NAME}}.tar.gz/download -o ${{env.BOOST_NAME}}.tar.gz
+         tar -xzf zlib-1.2.11.tar.gz
+         tar -xzf bzip2-1.0.6.tar.gz
+         tar -xzf ${{env.BOOST_NAME}}.tar.gz
+
+         Copy-Item -Path "${{env.BOOST_NAME}}\"  -Destination "$env:BOOST_ROOT" -Recurse -Force
+         Copy-Item -Path "zlib-1.2.11\"          -Destination "$env:BOOST_ROOT\zlib-1.2.11\" -Recurse -Force
+         Copy-Item -Path "bzip2-1.0.6\"          -Destination "$env:BOOST_ROOT\bzip2-1.0.6\" -Recurse -Force
+         cd ${{env.BOOST_ROOT}}
+         dir
+         
+         .\bootstrap.bat --without-icu
+         .\b2 --clean-all
+         .\b2 stage address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
+            runtime-link=static link=static `
+            --with-regex --disable-icu --disable-python --with-thread --with-serialization --with-iostreams --with-system `
+            -sBZIP2_SOURCE=${{ github.workspace }}\..\bzip2-1.0.6 -sZLIB_SOURCE=${{ github.workspace }}\..\zlib-1.2.11 -sNO_LZMA=1
+     
       - name: Configure build for amd64
         uses: ilammy/msvc-dev-cmd@v1
         with:
@@ -35,15 +65,19 @@ jobs:
       
       - name: Bulid RDKit
         run: |
+          dir ${{env.BOOST_NAME}}
           cd rdkit-Release_${{env.version}}
-          sed -i '/find_package(Boost ${RDK_BOOST_VERSION} REQUIRED CONFIG)/d' CMakeLists.txt
-          sed -i '/target_link_libraries(rdkit_base INTERFACE \${BOOST_LIBRARIES} Boost::boost)/d' CMakeLists.txt
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
-                   -DRDK_USE_BOOST_IOSTREAMS=OFF `
+                   -DBoost_USE_STATIC_LIBS=ON `
+                   -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
-                   -DRDK_USE_BOOST_SERIALIZATION=OFF `
+                   -DBoost_ROOT="${{env.BOOST_ROOT}}" `
+                   -DBoost_DIR="${{env.BOOST_ROOT}}  `
+                   -DBOOST_LIBRARYDIR="${{env.BOOST_ROOT}}\win32-x86_64\lib" `
+                   -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" `
+                   -DBoost_NO_BOOST_CMAKE=ON `
                    -G Ninja
                 
           sed -i 's/-MD/-MT/g' build.ninja
@@ -61,4 +95,3 @@ jobs:
             C:\RDKit_Win64
 
             
-
