@@ -39,7 +39,7 @@ jobs:
         shell: powershell
         run: |
          curl.exe -L https://github.com/boostorg/boost/releases/download/boost-1.81.0/boost-1.81.0.tar.gz
-         tar-xf boost-1.81.0.tar.gz
+         tar -xf boost-1.81.0.tar.gz
          dir
       
       - name: Bulid RDKit
