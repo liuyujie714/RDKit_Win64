@@ -38,6 +38,8 @@ jobs:
       - name: Install Boost
         shell: powershell
         run: |
+          cmake --version
+          exit
           $env:BOOST_PATH = "C:\boost"
           curl.exe -o "$env:TEMP\boost.exe" -L https://sourceforge.net/projects/boost/files/boost-binaries/${{env.BOOST_VERSION}}/${{env.BOOST_EXE}}.exe
           Start-Process -Wait -FilePath "$env:TEMP\boost.exe" "/SILENT","/SP-","/SUPPRESSMSGBOXES","/DIR=$env:BOOST_PATH"
@@ -52,8 +54,6 @@ jobs:
         run: |
           cd rdkit-Release_${{env.version}}
           md build && cd build
-          cmake --version
-          exit
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
