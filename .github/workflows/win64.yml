@@ -1,5 +1,4 @@
-
-	name: Build Windows RDKit 
+name: Build Windows RDKit 
 
 on:
   push:
@@ -65,7 +64,6 @@ jobs:
       
       - name: Bulid RDKit
         run: |
-          dir ${{env.BOOST_NAME}}
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
