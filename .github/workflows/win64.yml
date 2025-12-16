@@ -65,6 +65,7 @@ jobs:
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
+                   -DBoost_ROOT=${{ github.workspace }}\${{env.BOOST_NAME}} `
                    -G Ninja 
                    
           sed -i 's/-MD/-MT/g' build.ninja
