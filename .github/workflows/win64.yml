@@ -60,7 +60,7 @@ jobs:
         run: |
           cd rdkit-Release_${{env.version}}
           md build && cd build
-          cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
+          cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=ON `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DBoost_USE_STATIC_RUNTIME=ON `
