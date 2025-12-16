@@ -49,8 +49,8 @@ jobs:
          cd ${{env.BOOST_NAME}}
          .\bootstrap.bat --without-icu
          .\b2 --clean-all
-         .\b2 --stagedir=win32-x86_64 address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
-            runtime-link=static link=static stage `
+         .\b2 stage address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
+            runtime-link=static link=static `
             --with-regex --disable-icu --disable-python --with-thread --with-serialization --with-iostreams --with-system `
             -sBZIP2_SOURCE=${{ github.workspace }}\..\bzip2-1.0.6 -sZLIB_SOURCE=${{ github.workspace }}\..\zlib-1.2.11 -sNO_LZMA=1
       
@@ -65,10 +65,6 @@ jobs:
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
-                   -DBoost_NO_BOOST_CMAKE=ON `
-                   -DBoost_ROOT=${{ github.workspace }}\${{env.BOOST_NAME}} `
-                   -DBOOST_LIBRARY_DIR=${{ github.workspace }}\${{env.BOOST_NAME}}\win32-x86_64\lib `
-                   -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\include" `
                    -G Ninja 
                    
           sed -i 's/-MD/-MT/g' build.ninja
