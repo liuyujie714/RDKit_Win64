@@ -24,10 +24,14 @@ jobs:
       - name: Download source code
         run: |
           choco install curl wget ninja -y
-          pip install cmake==3.18
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xf Release_${{env.version}}.tar.gz
-          dir
+
+      - name: Configure build for amd64
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: amd64
+          toolset: 14.29  
 
       - name: Install Boost
         shell: powershell
