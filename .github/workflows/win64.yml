@@ -35,7 +35,6 @@ jobs:
       
       - name: Bulid RDKit
         run: |
-          dir ${{env.BOOST_NAME}}
           cd rdkit-Release_${{env.version}}
           sed -i '/find_package(Boost ${RDK_BOOST_VERSION} REQUIRED CONFIG)/d' CMakeLists.txt
           md build && cd build
