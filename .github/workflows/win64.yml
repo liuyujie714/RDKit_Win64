@@ -54,7 +54,7 @@ jobs:
       
       - name: Bulid RDKit
         env: 
-          BOOSt_ROOT: ${{ github.workspace }}\${{env.BOOST_NAME}}
+          BOOST_ROOT: ${{ github.workspace }}\${{env.BOOST_NAME}}
         run: |
           cd rdkit-Release_${{env.version}}
           md build && cd build
