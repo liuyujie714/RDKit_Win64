@@ -50,7 +50,7 @@ jobs:
          .\b2 --stagedir=win32-x86_64 address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
             runtime-link=static link=static stage `
             --with-regex --disable-icu --disable-python --with-thread --with-serialization --with-iostreams --with-system `
-            -sBZIP2_SOURCE=..\bzip2-1.0.6 -sZLIB_SOURCE=..\zlib-1.2.11 -sNO_LZMA=1
+            -sBZIP2_SOURCE=${{ github.workspace }}\..\bzip2-1.0.6 -sZLIB_SOURCE=${{ github.workspace }}\..\zlib-1.2.11 -sNO_LZMA=1
       
       - name: Bulid RDKit
         run: |
