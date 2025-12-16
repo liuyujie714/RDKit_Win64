@@ -75,7 +75,7 @@ jobs:
                    -DBOOST_LIBRARYDIR="${{env.BOOST_ROOT}}\win32-x86_64\lib" `
                    -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" `
                    -DBoost_NO_BOOST_CMAKE=ON `
-                   -DBoost_DEBUG=ON
+                   -G Ninja
                 
           sed -i 's/-MD/-MT/g' build.ninja
           ninja install -j4 || ninja install -j1
