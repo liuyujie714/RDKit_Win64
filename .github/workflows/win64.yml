@@ -51,7 +51,7 @@ jobs:
          
          .\bootstrap.bat --without-icu
          .\b2 --clean-all
-         .\b2 stage address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
+         .\b2 install --prefix=${{env.BOOST_ROOT}} address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
             runtime-link=static link=static `
             --with-regex --disable-icu --disable-python --with-thread --with-serialization --with-iostreams --with-system `
             -sBZIP2_SOURCE=${{ github.workspace }}\bzip2-1.0.6 -sZLIB_SOURCE=${{ github.workspace }}\zlib-1.2.11 -sNO_LZMA=1
