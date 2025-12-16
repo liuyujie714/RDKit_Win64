@@ -26,6 +26,7 @@ jobs:
           choco install curl wget ninja -y
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xf Release_${{env.version}}.tar.gz
+   
       - name: Configure build for amd64
         uses: ilammy/msvc-dev-cmd@v1
         with:
@@ -72,10 +73,7 @@ jobs:
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
                    -DBoost_ROOT="${{env.BOOST_ROOT}}" `
-                   -DBoost_DIR="${{env.BOOST_ROOT}}  `
-                   -DBOOST_LIBRARYDIR="${{env.BOOST_ROOT}}\win32-x86_64\lib" `
-                   -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" `
-                   -DBoost_NO_BOOST_CMAKE=ON `
+                   -DBoost_NO_BOOST_CMAKE=OFF `
                    -G Ninja
                 
           sed -i 's/-MD/-MT/g' build.ninja
