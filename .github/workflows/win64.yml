@@ -64,8 +64,11 @@ jobs:
           toolset: 14.29
       
       - name: Bulid RDKit
+        shell: powershell
         run: |
           pip install cmake==3.28.0
+          where cmake
+          cmake --version
           dir ${{env.BOOST_ROOT}}
           dir ${{env.BOOST_ROOT}}/tools/boost_install
           cd rdkit-Release_${{env.version}}
