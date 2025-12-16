@@ -47,7 +47,7 @@ jobs:
          cd ${{env.BOOST_NAME}}
          .\bootstrap.bat --without-icu
          .\b2 --clean-all
-         .\b2  --user-config=user-config.jam --stagedir=win32-x86_64 address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
+         .\b2 --stagedir=win32-x86_64 address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
             runtime-link=static link=static stage `
             --with-regex --disable-icu --disable-python --with-thread --with-serialization --with-iostreams --with-system `
             -sBZIP2_SOURCE=..\bzip2-1.0.6 -sZLIB_SOURCE=..\zlib-1.2.11 -sNO_LZMA=1
