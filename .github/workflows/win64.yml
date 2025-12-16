@@ -60,6 +60,7 @@ jobs:
           dir ${{env.BOOST_NAME}}\boost
           dir ${{env.BOOST_NAME}}\win32-x86_64
           dir ${{env.BOOST_NAME}}\win32-x86_64\lib
+          dir ${{env.BOOST_NAME}}\win32-x86_64\lib\cmake
           
           exit
       
