@@ -55,7 +55,7 @@ jobs:
          .\b2 stage address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
             runtime-link=static link=static `
             --with-regex --disable-icu --disable-python --with-thread --with-serialization --with-iostreams --with-system `
-            -sBZIP2_SOURCE=${{ github.workspace }}\..\bzip2-1.0.6 -sZLIB_SOURCE=${{ github.workspace }}\..\zlib-1.2.11 -sNO_LZMA=1
+            -sBZIP2_SOURCE=${{ github.workspace }}\bzip2-1.0.6 -sZLIB_SOURCE=${{ github.workspace }}\zlib-1.2.11 -sNO_LZMA=1
      
       - name: Configure build for amd64
         uses: ilammy/msvc-dev-cmd@v1
@@ -65,6 +65,8 @@ jobs:
       
       - name: Bulid RDKit
         run: |
+          dir ${{env.BOOST_ROOT}}
+          dir ${{env.BOOST_ROOT}}/boost
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
