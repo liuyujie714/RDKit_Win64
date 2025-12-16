@@ -38,7 +38,7 @@ jobs:
       - name: Install Boost
         shell: powershell
         run: |
-         wget https://github.com/boostorg/boost/releases/download/boost-1.81.0/boost-1.81.0.tar.gz
+         curl.exe -L https://github.com/boostorg/boost/releases/download/boost-1.81.0/boost-1.81.0.tar.gz
          tar-xf boost-1.81.0.tar.gz
          dir
       
