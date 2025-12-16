@@ -28,11 +28,6 @@ jobs:
           wget https://github.com/rdkit/rdkit/archive/Release_${{env.version}}.tar.gz
           tar -xf Release_${{env.version}}.tar.gz
           dir
-      - name: Configure build for amd64
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: amd64
-          toolset: 14.29
 
       - name: Install Boost
         shell: powershell
@@ -52,6 +47,12 @@ jobs:
             runtime-link=static link=static stage `
             --with-regex --disable-icu --disable-python --with-thread --with-serialization --with-iostreams --with-system `
             -sBZIP2_SOURCE=${{ github.workspace }}\..\bzip2-1.0.6 -sZLIB_SOURCE=${{ github.workspace }}\..\zlib-1.2.11 -sNO_LZMA=1
+
+      - name: Configure build for amd64
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: amd64
+          toolset: 14.29
       
       - name: Bulid RDKit
         env: 
