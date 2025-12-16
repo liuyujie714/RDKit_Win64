@@ -64,6 +64,7 @@ jobs:
         run: |
           dir ${{env.BOOST_NAME}}
           cd rdkit-Release_${{env.version}}
+          sed -i '/REQUIRED CONFIG/d' CMakeLists.txt
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
