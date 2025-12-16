@@ -36,7 +36,6 @@ jobs:
       - name: Install Boost
         shell: powershell
         run: |
-         cmake --version
          curl.exe -L https://zlib.net/fossils/zlib-1.2.11.tar.gz -o zlib-1.2.11.tar.gz
          curl.exe -L https://sourceware.org/pub/bzip2/bzip2-1.0.6.tar.gz -o bzip2-1.0.6.tar.gz
          curl.exe -L https://sourceforge.net/projects/boost/files/boost/${{env.BOOST_VERSION}}/${{env.BOOST_NAME}}.tar.gz/download -o ${{env.BOOST_NAME}}.tar.gz
@@ -67,7 +66,7 @@ jobs:
         shell: powershell
         run: |
           pip install cmake==3.28.0
-          where cmake
+          
           cmake --version
           dir ${{env.BOOST_ROOT}}
           dir ${{env.BOOST_ROOT}}/tools/boost_install
@@ -79,8 +78,7 @@ jobs:
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
                    -DBoost_ROOT=${{env.BOOST_ROOT}} `
-                   -DBoost_NO_BOOST_CMAKE=OFF `
-                   -DBoost_DIR=${{env.BOOST_ROOT}}/tools/boost_install `
+                   -DBoost_NO_BOOST_CMAKE=ON `
                    -DBOOST_LIBRARYDIR=${{env.BOOST_ROOT}}\stage\lib `
                    -G Ninja
                 
