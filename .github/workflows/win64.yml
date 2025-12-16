@@ -37,8 +37,8 @@ jobs:
       - name: Install Boost
         shell: powershell
         run: |
-         curl.exe -L https://www.zlib.net/zlib-1.2.11.tar.gz -o zlib-1.2.11.tar.gz
-         curl.exe -L https://sourceforge.net/projects/bzip2/files/bzip2-1.0.6.tar.gz/download -o bzip2-1.0.6.tar.gz
+         curl.exe -L https://zlib.net/fossils/zlib-1.2.11.tar.gz -o zlib-1.2.11.tar.gz
+         curl.exe -L https://sourceware.org/pub/bzip2/bzip2-1.0.6.tar.gz -o bzip2-1.0.6.tar.gz
          curl.exe -L https://sourceforge.net/projects/boost/files/boost/${{env.BOOST_VERSION}}/${{env.BOOST_NAME}}.tar.gz/download -o ${{env.BOOST_NAME}}.tar.gz
          tar -xzf zlib-1.2.11.tar.gz
          tar -xzf bzip2-1.0.6.tar.gz
