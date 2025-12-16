@@ -34,7 +34,7 @@ jobs:
           toolset: 14.29  
 
       - name: Install Boost
-        shell: powershell
+        shell: pwsh
         run: |
          curl.exe -L https://zlib.net/fossils/zlib-1.2.11.tar.gz -o zlib-1.2.11.tar.gz
          curl.exe -L https://sourceware.org/pub/bzip2/bzip2-1.0.6.tar.gz -o bzip2-1.0.6.tar.gz
@@ -63,7 +63,7 @@ jobs:
           toolset: 14.29
       
       - name: Bulid RDKit
-        shell: powershell
+        shell: pwsh
         run: |
           pip install cmake==3.28.0
           
