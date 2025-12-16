@@ -67,7 +67,7 @@ jobs:
                    -DCMAKE_BUILD_TYPE=Release `
                    -DBOOST_ROOT=${{env.BOOST_NAME}} `
                    -DBOOST_LIBRARYDIR=${{env.BOOST_NAME}}\win32-x86_64\lib `
-                   -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" 
+                   -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" `
                    -DBoost_NO_BOOST_CMAKE=OFF `
                    -DBoost_NO_SYSTEM_PATHS=ON 
                    
