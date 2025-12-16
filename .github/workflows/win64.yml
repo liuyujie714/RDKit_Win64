@@ -53,6 +53,8 @@ jobs:
             -sBZIP2_SOURCE=${{ github.workspace }}\..\bzip2-1.0.6 -sZLIB_SOURCE=${{ github.workspace }}\..\zlib-1.2.11 -sNO_LZMA=1
       
       - name: Bulid RDKit
+        env: 
+          BOOSt_ROOT: ${{ github.workspace }}\${{env.BOOST_NAME}}
         run: |
           cd rdkit-Release_${{env.version}}
           md build && cd build
@@ -61,7 +63,6 @@ jobs:
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
-                   -DBoost_NO_BOOST_CMAKE=OFF `
                    -DBoost_ROOT=${{ github.workspace }}\${{env.BOOST_NAME}} `
                    -DBOOST_LIBRARYDIR=${{ github.workspace }}\${{env.BOOST_NAME}}\win32-x86_64\lib `
                    -DBoost_NO_SYSTEM_PATHS=ON `
