@@ -64,7 +64,21 @@ jobs:
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
                    -DBoost_ROOT=${{ github.workspace }}\${{env.BOOST_NAME}} `
-                   -DBOOST_LIBRARYDIR=${{ github.workspace }}\${{env.BOOST_NAME}}\win32-x86_64\lib `
-                   -DBoost_NO_SYSTEM_PATHS=ON `
-
-
+                   -DBOOST_LIBRARY_DIR=${{ github.workspace }}\${{env.BOOST_NAME}}\win32-x86_64\lib `
+                   -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\include" `
+                   -G Ninja 
+                   
+          sed -i 's/-MD/-MT/g' build.ninja
+          ninja install -j4 || ninja install -j1
+          dir lib\
+          Copy-Item -Path ".\lib\"         -Destination "C:\RDKit_Win64\lib" -Recurse
+          Copy-Item -Path "..\Code\"       -Destination "C:\RDKit_Win64\Code" -Recurse
+        
+      - name: Upload RDKit
+        uses: actions/upload-artifact@v4
+        if: ${{ success() }}
+        with:
+          name: RDKit_Win64
+          path: |
+            C:\RDKit_Win64
+            
