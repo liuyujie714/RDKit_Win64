@@ -157,6 +157,6 @@ jobs:
           ls -alt
           # time stamp
           OUTPUT_TAR=RDKit_Win64_Static.tar.gz
-          tar -cvf ${OUTPUT_TAR} RDKit_Win64_Static
+          tar -czvf ${OUTPUT_TAR} RDKit_Win64_Static
           github-release upload --tag ${{ env.RELEASE_TAG }} --replace --name ${OUTPUT_TAR} --file ${OUTPUT_TAR}
 
