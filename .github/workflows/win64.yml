@@ -58,9 +58,6 @@ jobs:
           BOOST_ROOT: ${{ github.workspace }}\${{env.BOOST_NAME}}
         run: |
           dir ${{env.BOOST_NAME}}
-          
-          
-      
           cd rdkit-Release_${{env.version}}
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
@@ -72,7 +69,7 @@ jobs:
                    -DBoost_ROOT=${{env.BOOST_NAME}} `
                    -DBOOST_LIBRARY_DIR=${{env.BOOST_NAME}}\win32-x86_64\lib `
                    -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" `
-                   -G Ninja 
+                   -G "Visual Studio 16 2019" 
                    
           sed -i 's/-MD/-MT/g' build.ninja
           ninja install -j4 || ninja install -j1
@@ -89,3 +86,4 @@ jobs:
             C:\RDKit_Win64
 
             
+
