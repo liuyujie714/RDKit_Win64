@@ -9,7 +9,7 @@ on:
 env:
   version: 2025_09_3
   BOOST_VERSION: 1.81.0
-  BOOST_EXE: boost_1_81_0-msvc-14.2-64
+  BOOST_NAME: boost_1_81_0
 
 
 concurrency:
@@ -38,9 +38,20 @@ jobs:
       - name: Install Boost
         shell: powershell
         run: |
-         curl.exe -L https://github.com/boostorg/boost/releases/download/boost-1.81.0/boost-1.81.0.tar.gz
+         curl.exe -L https://www.zlib.net/zlib-1.2.11.tar.gz -o zlib-1.2.11.tar.gz
+         curl.exe -L https://sourceforge.net/projects/bzip2/files/bzip2-1.0.6.tar.gz/download -o bzip2-1.0.6.tar.gz
+         curl.exe -L https://sourceforge.net/projects/boost/files/boost/${{env.BOOST_VERSION}}/${{env.BOOST_NAME}}.tar.gz
+         tar -xf zlib-1.2.11.tar.gz
+         tar -xf bzip2-1.0.6.tar.gz
          tar -xf boost-1.81.0.tar.gz
          dir
+         cd boost-${{env.BOOST_VERSION}}
+         .\bootstrap.bat --without-icu
+         b2 --clean-all
+         b2 --user-config=user-config.jam --stagedir=win32-x86_64 address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
+            runtime-link=static link=static stage `
+            --with-regex --disable-icu --disable-python --with-thread --with-serialization --with-iostreams --with-system `
+            -sBZIP2_SOURCE=..\bzip2-1.0.6 -sZLIB_SOURCE=..\zlib-1.2.11 -sNO_LZMA=1
       
       - name: Bulid RDKit
         run: |
@@ -50,11 +61,11 @@ jobs:
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DBoost_USE_STATIC_RUNTIME=ON `
-                   -DBoost_ROOT=$env:BOOST_ROOT `
-                   -DBoost_NO_BOOST_CMAKE=ON `
-                   -DBoost_DIR=$env:BOOST_ROOT `
-                   -DBoost_INCLUDEDIR="${env:BOOST_ROOT}\boost\include" `
-                   -DBoost_LIBRARYDIR="${env:BOOST_ROOT}\lib64-msvc-14.2" `
+                   -DCMAKE_BUILD_TYPE=Release `
+                   -DBoost_NO_BOOST_CMAKE=OFF `
+                   -DBOOST_ROOT=${{ github.workspace }}\${{env.BOOST_NAME}} `
+                   -DBOOST_LIBRARYDIR=${{ github.workspace }}\${{env.BOOST_NAME}}\win32-x86_64\lib `
+                   -DBoost_NO_SYSTEM_PATHS=ON `
                    -G Ninja `
                    -DCMAKE_BUILD_TYPE=Release 
                    
