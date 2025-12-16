@@ -59,8 +59,10 @@ jobs:
           BOOST_ROOT: ${{ github.workspace }}\${{env.BOOST_NAME}}
         run: |
           cd rdkit-Release_${{env.version}}
+          # 删除包含该模式的行
+          sed -i '/find_package(Boost \${RDK_BOOST_VERSION} REQUIRED CONFIG)/d' CMakeLists.txt
           md build && cd build
-          cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=ON `
+          cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DBoost_USE_STATIC_RUNTIME=ON `
