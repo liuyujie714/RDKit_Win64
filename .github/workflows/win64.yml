@@ -70,12 +70,10 @@ jobs:
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
-                   -DBOOST_ROOT="${{env.BOOST_ROOT}}" `
+                   -DBoost_ROOT="${{env.BOOST_ROOT}}" `
                    -DBOOST_LIBRARYDIR="${{env.BOOST_ROOT}}\win32-x86_64\lib" `
-                   -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" `
-                   -DBoost_NO_BOOST_CMAKE=OFF `
-                   -DBoost_NO_SYSTEM_PATHS=ON 
-                   
+                   -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" 
+                
           sed -i 's/-MD/-MT/g' build.ninja
           ninja install -j4 || ninja install -j1
           dir lib\
