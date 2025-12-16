@@ -9,7 +9,7 @@ env:
   version: 2025_09_3
   BOOST_VERSION: 1.81.0
   BOOST_NAME: boost_1_81_0
-  BOOST_ROOT: C:\boost
+  BOOST_ROOT: C:\boost_1_81_0
   
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
