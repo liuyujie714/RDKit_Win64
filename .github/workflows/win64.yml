@@ -65,7 +65,7 @@ jobs:
       
       - name: Bulid RDKit
         run: |
-          pip install cmake==3.20
+          pip install cmake==3.28.0
           dir ${{env.BOOST_ROOT}}
           dir ${{env.BOOST_ROOT}}/boost
           cd rdkit-Release_${{env.version}}
