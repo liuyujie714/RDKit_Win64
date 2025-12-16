@@ -58,6 +58,7 @@ jobs:
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DBoost_ROOT=$env:BOOST_ROOT `
                    -DBoost_NO_BOOST_CMAKE=ON `
+                   -DBoost_DIR=$env:BOOST_ROOT `
                    -DBoost_INCLUDEDIR="${env:BOOST_ROOT}\boost\include" `
                    -DBoost_LIBRARYDIR="${env:BOOST_ROOT}\lib64-msvc-14.2" `
                    -G Ninja `
