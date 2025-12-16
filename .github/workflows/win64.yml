@@ -31,51 +31,19 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: amd64
-          toolset: 14.29  
-
-      - name: Install Boost
-        shell: powershell
-        run: |
-         cmake --version
-         curl.exe -L https://zlib.net/fossils/zlib-1.2.11.tar.gz -o zlib-1.2.11.tar.gz
-         curl.exe -L https://sourceware.org/pub/bzip2/bzip2-1.0.6.tar.gz -o bzip2-1.0.6.tar.gz
-         curl.exe -L https://sourceforge.net/projects/boost/files/boost/${{env.BOOST_VERSION}}/${{env.BOOST_NAME}}.tar.gz/download -o ${{env.BOOST_NAME}}.tar.gz
-         tar -xzf zlib-1.2.11.tar.gz
-         tar -xzf bzip2-1.0.6.tar.gz
-         tar -xzf ${{env.BOOST_NAME}}.tar.gz
-         dir
-         cd ${{env.BOOST_NAME}}
-         .\bootstrap.bat --without-icu
-         .\b2 --clean-all
-         .\b2 --stagedir=win32-x86_64 address-model=64 architecture=x86 toolset=msvc-14.2 threading=multi variant=release `
-            runtime-link=static link=static stage `
-            --with-regex --disable-icu --disable-python --with-thread --with-serialization --with-iostreams --with-system `
-            -sBZIP2_SOURCE=${{ github.workspace }}\..\bzip2-1.0.6 -sZLIB_SOURCE=${{ github.workspace }}\..\zlib-1.2.11 -sNO_LZMA=1
-
-      - name: Configure build for amd64
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: amd64
           toolset: 14.29
       
       - name: Bulid RDKit
-        env: 
-          BOOST_ROOT: ${{ github.workspace }}/${{env.BOOST_NAME}}
         run: |
           dir ${{env.BOOST_NAME}}
           cd rdkit-Release_${{env.version}}
-          sed -i '/REQUIRED CONFIG/d' CMakeLists.txt
+          sed -i '/find_package(Boost ${RDK_BOOST_VERSION} REQUIRED CONFIG)/d' CMakeLists.txt
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
-                   -DBoost_USE_STATIC_LIBS=ON `
-                   -DBoost_USE_STATIC_RUNTIME=ON `
+                   -DRDK_USE_BOOST_IOSTREAMS=OFF `
                    -DCMAKE_BUILD_TYPE=Release `
-                   -DBoost_ROOT="${{env.BOOST_ROOT}}" `
-                   -DBoost_DIR="${{env.BOOST_ROOT}}"  `
-                   -DBOOST_LIBRARYDIR="${{env.BOOST_ROOT}}\win32-x86_64\lib" `
-                   -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" `
-                   -DBoost_NO_BOOST_CMAKE=ON `
+                   -DRDK_USE_BOOST_SERIALIZATION=OFF `
                    -G Ninja
                 
           sed -i 's/-MD/-MT/g' build.ninja
