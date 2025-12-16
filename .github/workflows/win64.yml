@@ -37,6 +37,7 @@ jobs:
         run: |
           cd rdkit-Release_${{env.version}}
           sed -i '/find_package(Boost ${RDK_BOOST_VERSION} REQUIRED CONFIG)/d' CMakeLists.txt
+          sed -i '/target_link_libraries(rdkit_base INTERFACE \${BOOST_LIBRARIES} Boost::boost)/d' input_file
           md build && cd build
           cmake .. -DRDK_BUILD_PYTHON_WRAPPERS=OFF `
                    -DRDK_BUILD_FREETYPE_SUPPORT=OFF `
