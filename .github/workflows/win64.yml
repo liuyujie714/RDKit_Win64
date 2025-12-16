@@ -40,7 +40,7 @@ jobs:
         run: |
          curl.exe -L https://www.zlib.net/zlib-1.2.11.tar.gz -o zlib-1.2.11.tar.gz
          curl.exe -L https://sourceforge.net/projects/bzip2/files/bzip2-1.0.6.tar.gz/download -o bzip2-1.0.6.tar.gz
-         curl.exe -L https://sourceforge.net/projects/boost/files/boost/${{env.BOOST_VERSION}}/${{env.BOOST_NAME}}.tar.gz
+         curl.exe -L https://sourceforge.net/projects/boost/files/boost/${{env.BOOST_VERSION}}/${{env.BOOST_NAME}}.tar.gz/download -o ${{env.BOOST_NAME}}.tar.gz
          tar -xf zlib-1.2.11.tar.gz
          tar -xf bzip2-1.0.6.tar.gz
          tar -xf boost-1.81.0.tar.gz
@@ -66,20 +66,4 @@ jobs:
                    -DBOOST_ROOT=${{ github.workspace }}\${{env.BOOST_NAME}} `
                    -DBOOST_LIBRARYDIR=${{ github.workspace }}\${{env.BOOST_NAME}}\win32-x86_64\lib `
                    -DBoost_NO_SYSTEM_PATHS=ON `
-                   -G Ninja `
-                   -DCMAKE_BUILD_TYPE=Release 
-                   
-          sed -i 's/-MD/-MT/g' build.ninja
-          ninja install -j4 || ninja install -j1
-          dir lib\
-          Copy-Item -Path ".\lib\"         -Destination "C:\RDKit_Win64\lib" -Recurse
-          Copy-Item -Path "..\Code\"       -Destination "C:\RDKit_Win64\Code" -Recurse
-        
-      - name: Upload RDKit
-        uses: actions/upload-artifact@v4
-        if: ${{ success() }}
-        with:
-          name: RDKit_Win64
-          path: |
-            C:\RDKit_Win64
-            
+
