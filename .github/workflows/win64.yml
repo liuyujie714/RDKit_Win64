@@ -55,7 +55,7 @@ jobs:
       
       - name: Bulid RDKit
         env: 
-          BOOST_ROOT: ${{ github.workspace }}\${{env.BOOST_NAME}}
+          BOOST_ROOT: "${{ github.workspace }}\${{env.BOOST_NAME}}"
         run: |
           dir ${{env.BOOST_NAME}}
           cd rdkit-Release_${{env.version}}
@@ -65,8 +65,8 @@ jobs:
                    -DBoost_USE_STATIC_LIBS=ON `
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
-                   -DBOOST_ROOT=${{env.BOOST_ROOT}} `
-                   -DBOOST_LIBRARYDIR=${{env.BOOST_ROOT}}\win32-x86_64\lib `
+                   -DBOOST_ROOT="${{env.BOOST_ROOT}}" `
+                   -DBOOST_LIBRARYDIR="${{env.BOOST_ROOT}}\win32-x86_64\lib" `
                    -DBoost_INCLUDE_DIR="${{env.BOOST_ROOT}}\boost" `
                    -DBoost_NO_BOOST_CMAKE=OFF `
                    -DBoost_NO_SYSTEM_PATHS=ON 
