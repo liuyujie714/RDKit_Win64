@@ -82,6 +82,9 @@ jobs:
                    -DBoost_USE_STATIC_RUNTIME=ON `
                    -DCMAKE_BUILD_TYPE=Release `
                    -DBoost_ROOT=${{env.BOOST_ROOT}} `
+                   -DRDK_BUILD_CPP_TESTS=OFF `
+                   -DRDK_BUILD_INCHI_SUPPORT=ON `
+                   -DRDK_BUILD_XYZ2MOL_SUPPORT=ON `
                    -G Ninja
                 
           sed -i 's/-MD/-MT/g' build.ninja
