@@ -85,6 +85,7 @@ jobs:
                    -DRDK_BUILD_CPP_TESTS=OFF `
                    -DRDK_BUILD_INCHI_SUPPORT=ON `
                    -DRDK_BUILD_XYZ2MOL_SUPPORT=ON `
+                   -DRDK_BUILD_CHEMDRAW_SUPPORT=OFF `
                    -G Ninja
                 
           sed -i 's/-MD/-MT/g' build.ninja
