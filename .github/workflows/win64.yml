@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  version: 2026_03_2
+  version: 2026_03_5
   BOOST_VERSION: 1.81.0
   BOOST_NAME: boost_1_81_0
   BOOST_ROOT: C:\boost_1_81_0
